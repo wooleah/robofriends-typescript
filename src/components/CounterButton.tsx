@@ -1,8 +1,16 @@
 import React, { PureComponent } from 'react';
 
-class CounterButton extends PureComponent {
-  constructor() {
-    super();
+interface IProps {
+  color: string
+}
+
+interface IState {
+  count: number
+}
+
+class CounterButton extends PureComponent<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
     this.state = {
       count: 0
     }

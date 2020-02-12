@@ -16,16 +16,35 @@ const mapStateToProps = state => ({
     error: state.requestRobots.error
 });
 const mapDispatchToProps = dispatch => ({
-    onSearchChange: event => dispatch(setSearchField(event.target.value)),
+    onSearchChange: (event: React.SyntheticEvent<HTMLInputElement>): void => dispatch(setSearchField(event.target.value)),
     onRequestRobots: () => dispatch(requestRobots())
 });
 
-class App extends Component {
-    componentDidMount() {
+export interface IRobot {
+    id: number,
+    name: string,
+    email: string
+}
+
+interface IAppProps {
+}
+
+interface IAppState {
+    robots: Array<IRobot>,
+    searchField: string,
+    isPending: boolean
+}
+
+class App extends Component<IAppProps, IAppState> {
+    constructor(props: IAppProps) {
+        super(props);
+    }
+
+    componentDidMount(): void {
         this.props.onRequestRobots();
     }
 
-    render() {
+    render(): JSX.Element {
         const { searchField, onSearchChange, robots, isPending } = this.props;
         const filteredRobots = robots.filter(
             robot => robot.name
